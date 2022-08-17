@@ -1,21 +1,21 @@
 import './css/styles.css';
 var debounce = require('lodash.debounce');
-import API from './fetchCountries';
+import { fetchCountry } from './fetchCountries';
+var debounce = require('lodash.debounce');
 
 const DEBOUNCE_DELAY = 300;
 
-// Наити рефы///
 const input = document.getElementById('search-box');
 const countryList = document.querySelector('.country-list');
 
-const inputValue = input.addEventListener('input', onSearch);
+input.addEventListener('input', debounce(onSearch, DEBOUNCE_DELAY));
 
 function onSearch(e) {
   e.preventDefault();
   const form = e.currentTarget;
-  const searchInput = form.value;
+  const searchInput = input.value;
 
-  API.fetchCountry(searchInput)
+  fetchCountry(searchInput)
     .then(renderCountry)
     .catch(error => {
       console.log('error');
@@ -34,3 +34,12 @@ function renderCountry(country) {
   const markup = createInfoMarkup(country);
   countryList.insertAdjacentHTML('beforebegin', createInfoMarkup());
 }
+
+// function renderCountry(country) {
+//   const markup = createInfoMarkup(country).map(country => {
+//     return `<li>
+//     ${'flags.svg'} ${'name'}
+//   </li>`;
+//   });
+//   countryList.insertAdjacentHTML('beforebegin', markup);
+// }
