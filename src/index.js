@@ -20,9 +20,11 @@ function onSearch(e) {
     countryList.innerHTML = '';
     countryInfo.innerHTML = '';
     return;
+  } else if (ifSomeCountries) {
+    countryList.innerHTML = '';
+    countryInfo.innerHTML = '';
   }
 }
-
 //  Функции для markup -----------//
 
 function checkData(data) {
@@ -31,7 +33,7 @@ function checkData(data) {
       'Too many matches found. Please enter a more specific name.'
     );
     console.log('Too many matches found. Please enter a more specific name.');
-  } else if (data.length === 0) {
+  } else if (data.length === 0 && data.status === 404) {
     console.log('Oops, there is no country with that name');
   } else if (data.length >= 2 && data.length <= 10) {
     ifSomeCountries(data);
@@ -39,6 +41,7 @@ function checkData(data) {
   } else if (data.length === 1) {
     oneCountry(data);
     countryList.innerHTML = '';
+
     console.log('render 1 country');
   }
 }
